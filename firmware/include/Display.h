@@ -9,8 +9,6 @@
  *
  * @date    8/22/2026
  */
-// Standard libraries.
-#include <Adafruit_ILI9341.h>
 
 /** Display_Init()
  * 
@@ -26,25 +24,24 @@ void Display_Clear(void);
 
 /** Display_DrawText(*text, x, y)
  * 
- * This function puts text onto the ILI9341.
+ * Displays text at the specified position.
  * 
- * @param text  The actual text to be displayed
- * @param x     The x-coordinate of where the text should be displayed
- * @param y     The y-coordinate of where the text should be displayed
- * @return Returns 0 if unable to draw text, else returns 1 for success
+ * @param text  The null-terminated text to display
+ * @param x     The x-coordinate of the text
+ * @param y     The y-coordinate of the text
  */
-int Display_DrawText(const char* text, int x, int y);
+void Display_DrawText(const char* text, int x, int y);
 
-/** Display_DrawAlbumArt()
- * 
- * This function displays the album art onto the ILI9341.
- * 
- * @param art   The actual art to be displayed all in binary
- * @param x     The x-coordinate of where the text should be displayed
- * @param y     The y-coordinate of where the text should be displayed
- * @return  Returns 0 if unable to draw text, else returns 1 for success
- */
-int Display_DrawAlbumArt(unsigned char art, int x, int y);
+// /** Display_DrawAlbumArt()
+//  * 
+//  * Displays album artwork at the specified position.
+//  * 
+//  * @param art   The bitmap data representing the album artwork.
+//  * @param x     The x-coordinate of the artwork
+//  * @param y     The y-coordinate of the artwork 
+//  * @return  Returns 1 if successfull, 0 otherwise
+//  */
+// int Display_DrawAlbumArt(const unsigned char art, int x, int y);
 
 
  #endif // DISPLAY_H

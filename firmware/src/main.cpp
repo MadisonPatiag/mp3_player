@@ -28,6 +28,10 @@ void setup()
     Serial.println("Portable MP3 Player");
     Serial.println("XIAO RP2350 Boot Successful!");
     Serial.println("================================");
+
+    // DISPLAY TESTING
+    Display_Init();
+    Display_DrawText("HELLO!", 20, 20);
 }
 
 void loop()
