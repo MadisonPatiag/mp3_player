@@ -9,6 +9,7 @@
  */
 // Standard libraries.
 #include <Adafruit_ILI9341.h>
+#include <SPI.h>
 
 // Personal libraries.
 #include "Display.h"
@@ -25,7 +26,12 @@ Adafruit_ILI9341 tft(TFT_CS, TFT_DC, TFT_RESET);
 void Display_Init(void)
 {
     tft.begin();
-    tft.fillScreen(ILI9341_BLACK);
+
+    Serial.println("TFT initialization complete.");
+
+    tft.fillScreen(ILI9341_RED);
+
+    Serial.println("TFT fill complete.");
 }
 
 /**
@@ -39,7 +45,7 @@ void Display_Clear(void)
 /**
  * This function puts text onto the ILI9341.
  */
-int Display_DrawText(const char* text, int x, int y)
+void Display_DrawText(const char* text, int x, int y)
 {
     tft.setCursor(x, y);
     tft.setTextColor(ILI9341_WHITE);
@@ -50,4 +56,4 @@ int Display_DrawText(const char* text, int x, int y)
 /**
  * This function displays the album art onto the ILI9341.
  */
-// int Display_DrawAlbumArt(unsigned char art, int x, int y);
+int Display_DrawAlbumArt(unsigned char art, int x, int y);

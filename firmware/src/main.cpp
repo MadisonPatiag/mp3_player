@@ -31,7 +31,7 @@ void setup()
 
     // DISPLAY TESTING
     Display_Init();
-    Display_DrawText("HELLO!", 20, 20);
+    Display_DrawText("HELLO!", 20, 20);z
 }
 
 void loop()
