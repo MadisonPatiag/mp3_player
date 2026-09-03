@@ -32,16 +32,13 @@ void Display_Clear(void);
  */
 void Display_DrawText(const char* text, int x, int y);
 
-// /** Display_DrawAlbumArt()
-//  * 
-//  * Displays album artwork at the specified position.
-//  * 
-//  * @param art   The bitmap data representing the album artwork.
-//  * @param x     The x-coordinate of the artwork
-//  * @param y     The y-coordinate of the artwork 
-//  * @return  Returns 1 if successfull, 0 otherwise
-//  */
-// int Display_DrawAlbumArt(const unsigned char art, int x, int y);
+/** Display_DrawAlbumArt()
+ * 
+ * Displays album artwork at the specified position.
+ * 
+ * @param art   The bitmap data representing the album artwork.
+ */
+void Display_DrawAlbumArt(const uint16_t *art);
 
 
  #endif // DISPLAY_H
