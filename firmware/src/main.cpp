@@ -13,7 +13,9 @@
 
 // Personal libraries
 #include "Display.h"
-#include "clairo_charm.h"
+#include "Audio.h"
+#include "Controls.h"
+#include "clairo_charm.h" // remove after testing
 
 // **** Set any preprocessor directives here ****
 
