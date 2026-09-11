@@ -9,6 +9,7 @@
  *
  * @date    9/4/2026
  */
+#include <stdint.h>
 
 /**
  * Initializes the DFPlayer.

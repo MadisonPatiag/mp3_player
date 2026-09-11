@@ -1,5 +1,5 @@
 /**
- * @file    Display.h
+ * @file    Display.cpp
  *
  * Displays text and album art onto the TFT ILI9341. 
  *

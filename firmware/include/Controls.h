@@ -18,6 +18,7 @@
  *
  * @date    9/4/2026
  */
+#include <stdint.h>
 
 /**
  * This function initializes the proper pins such that the buttons 1-4 may be 
