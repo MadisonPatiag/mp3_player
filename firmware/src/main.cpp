@@ -17,7 +17,7 @@
 #include "Display.h"
 #include "Audio.h"
 #include "Controls.h"
-#include "clairo_charm.h" // remove after testing
+#include "clairo_charm.h" // remove after testing   
 
 // **** Set any preprocessor directives here ****
 
@@ -83,7 +83,7 @@ bool Timer_ISR_Callback(struct repeating_timer *t);
 // }
 
 /* -------------------------------------------------------------------------- */
-/*                              Setup & Loop                                  */
+/*                              Setup, Loop, & Timer_ISR                                  */
 /* -------------------------------------------------------------------------- */
 void setup()
 {
@@ -103,18 +103,32 @@ void setup()
 
     // Initialize components
     Display_Init();
-    // DFPlayer - Audio_Init();
+    bool audio_init_success = Audio_Init();
     // Controls - Controls_Init();
+
+    if (!audio_init_success)
+    {
+        Serial.println("DFPlayer initialization failed!");
+    }
+    else
+    {
+        Serial.println("DFPlayer initialized successfully!");
+    }
 
 
     /* TESTING */
+    // Display Testing
+    Display_Clear();
     // Display_DrawText("HELLO!", 50, 50);
-    // Display_DrawAlbumArt(clairo_charm);
+    Display_DrawAlbumArt(clairo_charm);
+    
+    // Timer Testing
+    // Serial.println("Starting timer test...");
+    // Timer_Init();
 
-    Serial.println("Starting timer test...");
-
-    Timer_Init();
-
+    // Audio Testing
+    
+    Audio_Play(1,1);
 }
 
 void loop()

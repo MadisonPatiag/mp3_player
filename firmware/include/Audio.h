@@ -7,19 +7,19 @@
  *
  * @author  Madison Patiag
  *
- * @date    9/4/2026
+ * @date    9/12/2026
  */
 #include <stdint.h>
 
 /**
  * Initializes the DFPlayer.
  */
-void Audio_Init(void);
+bool Audio_Init(void);
 
 /**
- * Plays the inputted audio track. 
+ * Plays the inputted audio track from the respective folder. 
  */
-void Audio_Play(uint16_t track);
+void Audio_Play(uint8_t folderNumber, uint8_t trackNumber);
 
 /**
  * Pauses the current audio track. 

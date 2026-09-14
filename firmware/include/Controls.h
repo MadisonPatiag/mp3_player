@@ -21,13 +21,12 @@
 #include <stdint.h>
 
 /**
- * This function initializes the proper pins such that the buttons 1-4 may be 
- * used.
+ * Initializes the proper pins such that the encoder buttons and center button may be used.
  */
 void Controls_Init(void);
 
 /**
- * 
+ * Checks the current button states and returns any events that have occured since its last call.  *  This function should be called repeatedly in a Timer ISR.
  */
 uint8_t Controls_CheckEvents(void);
 
