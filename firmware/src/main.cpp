@@ -17,7 +17,6 @@
 #include "Display.h"
 #include "Audio.h"
 #include "Controls.h"
-#include "clairo_charm.h" // remove after testing   
 
 // **** Set any preprocessor directives here ****
 
@@ -46,22 +45,12 @@ typedef struct
 // **** Define any module-level, global, or external variables here ****
 volatile bool timerEvent = false;
 volatile uint32_t freeRunningCounter = 0;
-
-static SongData song = // this should be empty, just filled right now for testing display
-{
-    SETUP,
-    "Second Nature",
-    "Clairo",
-    clairo_charm,
-    0,
-    0,
-    100
-};
+volatile ControlEvent controlEvent = CONTROL_NONE;
 
 // **** Function prototypes ****
-void Timer_Init(void);
-void Timer_End(void);
-bool Timer_ISR_Callback(struct repeating_timer *t);
+// void Timer_Init(void);
+// void Timer_End(void);
+// bool Timer_ISR_Callback(struct repeating_timer *t);
 
 /* -------------------------------------------------------------------------- */
 /*                              Player State Machine                          */
@@ -83,74 +72,40 @@ bool Timer_ISR_Callback(struct repeating_timer *t);
 // }
 
 /* -------------------------------------------------------------------------- */
-/*                              Setup, Loop, & Timer_ISR                                  */
+/*                              Setup, Loop, & Timer_ISR                      */
 /* -------------------------------------------------------------------------- */
-void setup()
+void setup(void)
 {
     Serial.begin(115200); // Initialize serial monitor for debugging purposes
 
-    // Wait for serial monitor to connect
-    while (!Serial)
-    {
-        delay(10);
-    }
-
-    printf(
-        "Welcome to Maddie's MP3 Player.\n"
-        "Compiled on %s %s. \n\r",
-        __TIME__,
-        __DATE__);
-
     // Initialize components
     Display_Init();
-    bool audio_init_success = Audio_Init();
-    // Controls - Controls_Init();
+    Audio_Init();
+    Timer_Init();
+    Controls_Init();
 
-    if (!audio_init_success)
-    {
-        Serial.println("DFPlayer initialization failed!");
-    }
-    else
-    {
-        Serial.println("DFPlayer initialized successfully!");
-    }
-
-
-    /* TESTING */
-    // Display Testing
-    Display_Clear();
-    // Display_DrawText("HELLO!", 50, 50);
-    Display_DrawAlbumArt(clairo_charm);
-    
-    // Timer Testing
-    // Serial.println("Starting timer test...");
-    // Timer_Init();
-
-    // Audio Testing
-    
-    Audio_Play(1,1);
+    // DELETE LATER
+    Serial.println("System initialized!");
 }
 
 void loop()
 {
-    /*
-     * The timer ISR sets timerEvent whenever the timer expires.
-     *
-     * The main loop polls this event and handles it here.
-     */
-    // Poll timer event flag 
+    // Poll Control event flag
+    if (controlEvent != CONTROL_NONE)
+    {
+        playerSM();
+
+        // clear control event
+        controlEvent = CONTROL_NONE;
+    }
+
+    // Poll Timer event flag
     if (timerEvent == true)
     {
-        timerEvent = false; // clear timer event flag (asap so it's only processed once)
-        
-        // playerSM(); // run player state machine ONLY when timer event triggered
+        playerSM();
 
-        /*
-         * For testing:
-         * Print the free-running counter every timer event.
-         */
-        // Serial.print("Timer event! Counter = ");
-        // Serial.println(freeRunningCounter);
+        // clear Timer event flag
+        timerEvent = false;
     }
 }
 
@@ -158,11 +113,19 @@ void loop()
  * Timer_ISR_Callback()
  *
  * This function is called automatically every time the repeating timer expires.
+ *  It sets timerEvent whenever the timer expires and the main loop polls the event
+ *  and handles it in loop().
  */
 bool Timer_ISR_Callback(struct repeating_timer *t)
 {
     timerEvent = true;     // signal that a timer event occurred
     freeRunningCounter++;  // increment free running counter (counts in 10 ms clicks)
+    ControlEvent event = Controls_CheckEvents();
+
+    if (event != CONTROL_NONE)
+    {
+        controlEvent = event;
+    }
 
     // return true so timer continues repeating
     return true; 

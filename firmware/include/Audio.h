@@ -1,5 +1,4 @@
-#ifndef AUDIO_H   
-#define AUDIO_H
+#pragma once // had to use pragma instead of header guard since it wasn't working how I intended
 /**
  * @file    Audio.h
  *
@@ -42,5 +41,17 @@ void Audio_Next(void);
  */
 void Audio_Previous(void);
 
+/**
+ * Sets the appropriate volume.
+ */
+void Audio_SetVolume(uint8_t volume);
 
-#endif // AUDIO_H
+/**
+ * Increase volume.
+ */
+void Audio_IncreaseVolume(void);
+
+/**
+ * Decrease volume.
+ */
+void Audio_DecreaseVolume(void);
